@@ -11,8 +11,7 @@ from django.urls import reverse
 # Create your views here.
 
 def about(request):
-        context_dict = {'your_name': 'Selim Hadjadj-Aoul'}
-        return render(request, 'rango/about.html', context=context_dict)
+        return render(request, 'rango/about.html', {})
 def index(request):
         # Make query, order database by likes (desc) and only show top 5
         category_list = Category.objects.order_by('-likes')[:5]
@@ -51,7 +50,7 @@ def add_category(request):
                         form.save(commit=True)
                         # Now that the category is saved, we could confirm this.
                         # For now, just redirect the user back to the index view.
-                        return redirect('/rango/')
+                        return redirect(reverse('rango:index'))
                 else:
                         # The supplied form contained errors -
                         # just print them to the terminal.
@@ -69,7 +68,7 @@ def add_page(request, category_name_slug):
     
     # You cannot add a page to a Category that does not exist... DM
     if category is None:
-        return redirect('/rango/')
+        return redirect(reverse('rango:index'))
 
     form = PageForm()
 
