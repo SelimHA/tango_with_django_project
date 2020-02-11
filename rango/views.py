@@ -21,6 +21,7 @@ from datetime import datetime
 def about(request):
         context_dict = {}
         visitor_cookie_handler(request)
+        context_dict['visits'] = request.session['visits']
         return render(request, 'rango/about.html', context=context_dict)
 def index(request):
         # Make query, order database by likes (desc) and only show top 5
